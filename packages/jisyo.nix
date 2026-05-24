@@ -8,7 +8,8 @@
 lib.makeOverridable (
   { dicts }:
   stdenv.mkDerivation {
-    name = "yaskkserv-jisyo";
+    pname = "yaskkserv-jisyo";
+    version = yaskkserv2.version;
 
     src = symlinkJoin {
       name = "skkDictionaries";
