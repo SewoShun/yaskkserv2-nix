@@ -21,6 +21,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ openssl ];
 
+  # テストがcurlによる外部通信を必要とするため、サンドボックス環境では実行不可
   doCheck = false;
 
   postInstall = ''
