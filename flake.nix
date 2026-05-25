@@ -1,10 +1,12 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs.follows = "nixpkgs";
     systems.url = "github:nix-systems/default";
+    systems.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -22,7 +24,6 @@
         systems = import inputs.systems;
 
         imports = [
-          inputs.home-manager.flakeModules.home-manager
           inputs.treefmt-nix.flakeModule
         ];
 

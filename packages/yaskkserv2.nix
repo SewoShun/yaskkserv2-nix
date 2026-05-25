@@ -34,5 +34,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
       licenses.apsl20
       licenses.mit
     ];
+    mainProgram = "yaskkserv2";
+    homepage = "https://github.com/wachikun/yaskkserv2";
   };
 })

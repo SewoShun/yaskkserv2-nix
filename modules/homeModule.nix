@@ -6,8 +6,12 @@
   ...
 }:
 let
-  cfg = config.services.yaskkserv2;
   system = pkgs.stdenv.hostPlatform.system;
+  cfg = config.services.yaskkserv2;
+  jisyo = pkgs.callPackage ../packages/jisyo.nix {
+    yaskkserv2 = cfg.package;
+    dicts = cfg.jisyo;
+  };
 in
 {
   options.services.yaskkserv2 = {
@@ -15,10 +19,12 @@ in
     jisyo = lib.mkOption {
       default = [ pkgs.skkDictionaries.l ];
       type = lib.types.listOf lib.types.package;
+      description = "List of dictionaries used by yaskkserv2";
     };
     package = lib.mkOption {
       default = self.packages.${system}.yaskkserv2;
       type = lib.types.package;
+      description = "The yaskkserv2 package to use";
     };
   };
 
@@ -26,7 +32,7 @@ in
     home.services.yaskkserv2 = {
       process.argv = [
         "${cfg.package}/bin/yaskkserv2"
-        "${self.packages.${system}.jisyo.override { dicts = cfg.jisyo; }}/share/skk/yaskkserv.jisyo"
+        "${jisyo}/share/skk/yaskkserv2.jisyo"
         "--no-daemonize"
       ];
     };
