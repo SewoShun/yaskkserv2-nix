@@ -29,12 +29,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.services.yaskkserv2 = {
-      process.argv = [
-        "${cfg.package}/bin/yaskkserv2"
-        "${jisyo}/share/skk/yaskkserv2.jisyo"
-        "--no-daemonize"
-      ];
+    systemd.user.services.yaskkserv2 = {
+      Unit.Description = "yaskkserv2 SKK server";
+      Install.WantedBy = [ "default.target" ];
+      Service = {
+        ExecStart = lib.concatStringsSep " " [
+          "${cfg.package}/bin/yaskkserv2"
+          "${jisyo}/share/skk/yaskkserv2.jisyo"
+          "--no-daemonize"
+        ];
+        Restart = "on-failure";
+      };
     };
   };
 }
