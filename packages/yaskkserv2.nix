@@ -31,7 +31,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   meta = {
     description = "Yet Another SKK server";
     license = with lib; [
-      licenses.apsl20
+      licenses.asl20
       licenses.mit
     ];
     mainProgram = "yaskkserv2";
